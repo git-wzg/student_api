@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fh.dao.StudentDao">
+    <select id="queryCount" resultType="long">
+        select count(id) from t_student where isDel=1
+    </select>
+    <select id="queryStudentList" resultType="com.fh.entity.po.StudentBean">
+        select * from t_student
+        where isDel=1
+        limit #{start},#{length}
+    </select>
+
+    <select id="queryStudentById" resultType="com.fh.entity.po.StudentBean">
+        select * from t_student where id=#{id}
+    </select>
+</mapper>
