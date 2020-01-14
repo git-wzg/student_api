@@ -39,8 +39,6 @@ public class ExceUtil {
                         row1.createCell(j).setCellValue(name+"");
                     }
 
-
-
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 } catch (NoSuchFieldException e) {

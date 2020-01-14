@@ -3,8 +3,7 @@ package com.fh.controller;
 import com.fh.entity.po.StudentBean;
 import com.fh.service.StudentService;
 import com.fh.util.AliyunOssUtils;
-import com.fh.util.ExceUtil;
-import com.fh.util.Excel;
+import com.fh.util.ExcelUtils;
 import com.fh.util.PageBean;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -19,8 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Field;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 @CrossOrigin(origins = "http://localhost:8888")
 @Controller
 @RequestMapping("student")
@@ -117,20 +118,11 @@ public class StudentController {
     // 导出excel
     @RequestMapping("getExcel")
     public void getExcel(HttpServletResponse response, XSSFWorkbook book){
-
+        /*获取要导出的数据*/
         List<StudentBean> list=studentService.queryStudentListExcel();
-        Class<StudentBean> studentClass = StudentBean.class;
-        Field[] fields  = studentClass.getDeclaredFields();
-        List<String> li=new ArrayList<>();
-        List<String> st=new ArrayList<>();
-        for(Field field : fields){
-            Excel annotation = field.getAnnotation(Excel.class);
-            if(annotation!=null){
-                li.add(annotation.value());
-                st.add(annotation.name());
-            }
-        }
-        ExceUtil.exceleUtil(list,st,li,response,book);
+
+        /*调用工具类，将要导出的数据传过去*/
+        ExcelUtils.execelUtil(list,response);
 
     }
 }
