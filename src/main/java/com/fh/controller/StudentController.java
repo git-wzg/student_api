@@ -1,13 +1,11 @@
 package com.fh.controller;
 
+import com.fh.common.annotaction.IsNoLogin;
 import com.fh.entity.po.StudentBean;
 import com.fh.service.StudentService;
 import com.fh.util.AliyunOssUtils;
 import com.fh.util.ExcelUtils;
 import com.fh.util.PageBean;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,19 +28,18 @@ public class StudentController {
     private StudentService studentService;
     @Autowired
     private HttpServletRequest request;
-    private final static Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
     /*分页查询*/
     @RequestMapping("queryStudentList")
     @ResponseBody
+    @IsNoLogin
     public PageBean<StudentBean> queryStudentList(PageBean<StudentBean> pageBean){
         pageBean=studentService.queryStudentList(pageBean);
-
-        LOGGER.info("用户试试水执行了登录操作");
         return pageBean;
     }
     /*新增*/
     @RequestMapping("addStudent")
     @ResponseBody
+    @IsNoLogin
     public Map addStudent(StudentBean studentBean){
         /*处理年龄*/
         int year = studentBean.getBirthday().getYear();
@@ -61,6 +58,7 @@ public class StudentController {
     /*回显*/
     @RequestMapping("queryStudentById")
     @ResponseBody
+    @IsNoLogin
     public StudentBean queryStudentById(Integer id){
         StudentBean studentBean=studentService.queryStudentById(id);
         return studentBean;
@@ -69,6 +67,7 @@ public class StudentController {
     /*修改*/
     @RequestMapping("updateStudentById")
     @ResponseBody
+    @IsNoLogin
     public Map updateStudentById(StudentBean studentBean){
         /*处理年龄*/
         int year = studentBean.getBirthday().getYear();
@@ -86,6 +85,7 @@ public class StudentController {
     /*删除*/
     @RequestMapping("deleteStudentById")
     @ResponseBody
+    @IsNoLogin
     public Map deleteStudentById(Integer id){
         StudentBean studentBean=studentService.queryStudentById(id);
         studentBean.setIsDel(2);
@@ -117,7 +117,8 @@ public class StudentController {
 
     // 导出excel
     @RequestMapping("getExcel")
-    public void getExcel(HttpServletResponse response, XSSFWorkbook book){
+    @IsNoLogin
+    public void getExcel(HttpServletResponse response){
         /*获取要导出的数据*/
         List<StudentBean> list=studentService.queryStudentListExcel();
 

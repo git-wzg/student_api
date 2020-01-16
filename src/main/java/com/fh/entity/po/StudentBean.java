@@ -30,7 +30,16 @@ public class StudentBean {
     @ExcelFild(name = "家庭住址")
     private String address;
     private String imgPath;
+    private String addressStr;
     private Integer isDel;
+
+    public String getAddressStr() {
+        return addressStr;
+    }
+
+    public void setAddressStr(String addressStr) {
+        this.addressStr = addressStr;
+    }
 
     public Integer getId() {
         return id;

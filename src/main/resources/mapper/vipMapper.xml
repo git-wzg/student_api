@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.fh.dao.VipDao">
+    <select id="queryPhone" resultType="com.fh.entity.po.VipBean">
+        select * from t_vip where phone=#{phone}
+    </select>
+
+    <!--注册-->
+    <insert id="addVipBean" parameterType="com.fh.entity.po.VipBean" useGeneratedKeys="true" keyProperty="id">
+        insert into t_vip(name,password,phone,createDate,isLock)values (#{name},#{password},#{phone},#{createDate},#{isLock})
+    </insert>
+
+</mapper>
